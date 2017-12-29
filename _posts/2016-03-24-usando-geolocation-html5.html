@@ -1,0 +1,87 @@
+---
+layout: post
+title:  "Usando Geolocation API - HTML5"
+description: "Como saber a latitude e longitude do usuário com a API do HTML5"
+date:   2016-03-24 18:21:00
+categories: ['javascript', 'geolocation', 'html5']
+disqus: true
+image: "/assets/images/html5-geolocation-api.png"
+---
+<p>
+    <h5>Geolocation API</h5>
+    A API Geolocation é uma funcionalidade nova do HTML5, onde é solicitado ao usuário a obtenção da localização (latitude e longitude) que ele se encontra.
+</p>
+
+<img src="/assets/images/html5-geolocation-api.png" alt="HTML5" style="width: 200px; margin-left: 40%;" />
+<p>
+    <h5>Como usar?</h5>
+    Esse é o código de como utilizar a API, leia os comentários. :)
+</p>
+
+<p>
+<pre>
+    <code class="javascript">
+
+if (navigator.geolocation) { // Verifica se o browser tem suporte ao geolocation
+    // Após a verificação, tentamos obter a posição atual do usuário.
+
+    // Este objeto tem uma série de parametros para a nossa função de localização
+    // Habilitar Alta Precisão (enableHighAccuracy): melhor precisão no resultado
+    // Tempo limite (timeout): o tempo que a função irá esperar pela resposta
+    // Vida máxima (maximumAge): vida útil do cache (posicao).
+    var opcional = {
+        enableHighAccuracy: true,
+        timeout: 50000,
+        maximumAge: 0
+    };
+
+    // Essa função (getCurrentPosition), aceita duas funções de callback (sucesso e erro) e parametros opcionais
+    navigator.geolocation.getCurrentPosition(sucesso, erro, opcional);
+} else {
+    alert('Seu browser não suporta a Geolocation API');
+}
+// Funcao sucesso
+// Ela vai ser invocada quando o usuário aceitar compartilhar sua localização
+// O parametro dela sera um objeto com informações, tais como:
+// Latitude e Longitude: coordenadas geográficas
+// Precisão (Accuracy): nível de precisão lat/lng em metros
+// Altitude: altura da posição acima do nivel do mar em metros, também
+// Precisão de Altitude (Altitude Accuracy): precisão de altitude
+// Rumo (Heading): direção de deslocamento
+// Velocidade (Speed): velocidade de deslocamento
+function sucesso(position) {
+    alert('latitude: ' + position.coords.latitude + ' Longitude: ' + position.coords.longitude);
+}
+
+// Funcao erro
+// Vai ser invocada quando ocorrer um erro, seja ele: o browser nao conseguir obter a localização do usuario
+// O usuario não permitir que o browser obtenha a localização etc.
+// O parametro será, também, um objeto:
+// Codigo (Code): código do erro
+// Mensagem (Message): mensagem descritiva do erro
+function erro(err) {
+    switch (err.code) {
+        case 1:
+            alert('Permissão negada');
+            break;
+        case 2:
+            alert('Posição indisponivel');
+            break;
+        case 3:
+            alert('Tempo esgotado');
+            break;
+    }
+}
+    </code>
+</pre>
+</p>
+<p>
+    Assim que executar o código, não esqueça de autorizar o browser para obter sua localização. ;)
+</p>
+
+<p>
+    Fontes: <br>
+    http://html5doctor.com/finding-your-position-with-geolocation/
+    <br>
+    http://www.w3schools.com/html/html5_geolocation.asp
+</p>

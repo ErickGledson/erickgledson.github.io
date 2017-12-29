@@ -1,0 +1,66 @@
+---
+layout: post
+title:  "Introdução ao Node JS"
+description: "Uma breve introdução sobre o que é o NodeJS, instalação e o 'Hello Node!'"
+date:   2015-02-26 22:45:00
+categories: ['javascript', 'nodejs']
+disqus: true
+image: "/assets/images/V8.png"
+---
+<p>
+    <h4>O que é NodeJS?</h4>
+    NodeJS é uma plataforma de desenvolvimento JavaScript que tem como base o motor JavaScript (falaremos muito JavaScript!) do Google Chrome.
+    <br>
+    Criado para ajudar em projetos web (e até mesmo desktop), de alta escalabilidade, com capacidade de manipular milhares de conexões simultâneas sem problemas e utiliza o modelo não bloqueante de I/O.
+</p>
+
+<img src="/assets/images/V8.png" alt="NodeJS" style="width: 200px; margin-left: 40%;" />
+
+<p>
+    <h5>I/O não bloqueante?</h5>
+    Por exemplo, na fila do médico há 10 pacientes esperando para serem atendidos e para todos eles foi passado exame de sangue. No <b>modelo bloqueante</b>, o médico teria que esperar
+    todos fazerem o exame para serem atendidos, no <b>modelo não bloqueante</b> não é necessário esperar todos, quem estiver feito o exame já é atendido. Simples, né?
+</p>
+
+<p>
+    <h5>Código fonte da página</h5>
+    O NodeJS é JavaScript no lado do servidor, ou seja, ele atua como o PHP, ASP.NET, Java etc. Mesmo que alguém queira ver o "código fonte da página", ele não terá acesso ao seu código. Legal, não?
+    Então, ao desenvolverem em NodeJS, fiquem despreocupados em relação ao acesso indevido, pois a única coisa que poderão ver é o HTML.
+</p>
+
+<p>
+    <h4>Instalando o NodeJS</h4>
+    Você pode fazer o download do NodeJS clicando <a href="https://nodejs.org/en/" target="_blank" style="color:#000;">aqui</a>. E seguir as instruções para a instalação.
+    <br>
+    <br>
+    <b>Em Windows:</b> next, aceito os termos, next, next, *aguarda instalação*, finish.
+    <br>
+    <b>Em Linux:</b> sudo apt-get install nodejs
+    <br>*aguarda a instalação e digite: sudo apt-get install npm
+    <br>
+    <b>Em Mac:</b> OK, next, *aguarda instalação*, OK
+    <br>
+    <small> <b>Nota:</b> Ok, posso ter trocado a ordem entre um next e outro, mas o passo-a-passo é quase esse.</small>
+</p>
+
+<p>
+    <h5>Hello Node!(???)</h5>
+    Veja, com pouquíssimo código nós criamos um servidor web (tipo IIS, Apache ou Tomcat) com o NodeJS e fizemos o nosso primeiro "Hello Node!" (pois já sabemos demais para o "Hello World!", certo? ;) ).
+</p>
+<pre>
+    <code class="javascript">
+var http = require('http');
+var server = http.createServer(function (req, res) {
+    res.writeHead(200, {'Content-type': 'text/html'});
+    res.end('Hello Node!');
+});
+server.listen(3000);
+console.log('Servidor iniciado. Acesse: localhost:3000');
+    </code>
+</pre>
+
+<p>
+    <h4>Conclusão</h4>
+    Espero que tenha conseguido passar todo o conteúdo de maneira clara e objetiva, além de ter despertado o seu interesse em saber mais sobre essa poderosa ferramenta que é o Node.
+    Caso queira continuar sua aventura, explorando e obtendo mais conhecimento, visite a <a href="https://nodejs.org/api/" style="color: #000;" target="_blank">documentação do NodeJS</a>.
+</p>

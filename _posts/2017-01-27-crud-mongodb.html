@@ -1,0 +1,194 @@
+---
+layout: post
+title:  "CRUD com MongoDB"
+description: "Criando, Lendo, Atualizando e Deletando no Mongo."
+date:   2017-01-27 11:32:00
+categories: ['mongodb']
+disqus: true
+image: "/assets/images/crud.png"
+---
+
+<p>
+    <h5>Já pensou em iniciar com NoSQL?</h5>
+    Conheço alguns desenvolvedores que ouviram falar, mas sequer se aventuram além do MySQL. Medo? Talvez. Mas e você? Já ouviu falar de NoSQL? Gostaria de conhecer um pouco mais para poder se aprofundar?
+    <br>
+    Então, sigam-me os bons! :)
+</p>
+
+<img src="/assets/images/crud.png" alt="CRUD"/>
+
+<p>
+    <h5>Instalação...</h5>
+    Há um tempo, fiz um post falando sobre a instalação do Mongo. <a href="http://erickgledson.github.io/mongodb/2015/02/28/instalando-mongodb-no-windows.html" alt="Instalando o Mongo" target="_blank">Clique aqui</a>  e seja feliz.
+</p>
+
+<p>
+    <h5>Como o Mongo funciona?</h5>
+    Há o nosso banco de dados (database). OK, até aqui nada muda... <br>
+    No Mongo não há tabelas como no MySQL... Há coleções, que nada mais são que conjuntos de objetos de mesma natureza. Exemplo: 
+    <br>
+    Clientes, Serviços, Automóveis etc...
+</p>
+
+<p>
+    Logo, dentro de nossas coleções há nossos documentos (ou objetos) que, comparando com bancos relacionais, são nossas colunas. Esses documentos não tem forma definida, tal como o banco relacional, então eu posso dizer que um cliente 
+    tem um campo CPF e outro CNPJ, sem precisar que existam os dois campos na tabela.
+</p>
+
+<p>
+    <h5>Melhor do que explicar, é mostrar!</h5>
+    Então vamos praticar!
+</p>
+
+<p>
+    Primeiro, é levantar o servidor do mongo. Abra o prompt de comando/powershell/terminal/etc e digite:
+</p>
+
+<blockquote cite="">
+    mongod
+</blockquote>
+
+<p>
+    Depois, abra um outro prompt de comando/powershell/terminal/etc (que a partir de agora vou chamar de C2) e digite:
+</p>
+
+<blockquote cite="">
+    mongo
+</blockquote>
+
+<p>
+    <h5>Listando nossos bancos</h5>
+    Para saber se já existe banco de dados na sua instalação, digite este comando no C2:
+</p>
+
+<blockquote cite="">
+    show dbs
+</blockquote>
+
+<img src="/assets/images/mongo-crud/mongod.png" alt="">
+
+<p>
+    <h5>Criando um banco</h5>
+    Para nosso tutorial, vamos criar um novo banco! Então, no C2, digite:
+</p>
+
+<blockquote cite="">
+    use teste
+</blockquote>
+
+<img src="/assets/images/mongo-crud/use-teste.png" alt="">
+
+<p>
+    <h5>Criando coleção</h5>
+    Ele irá criar um banco de dados temporário, pois ainda não há coleções dentro dele. Então, vamos criar! Digite:
+</p>
+
+<blockquote cite="">
+    db.createCollection("clientes")
+</blockquote>
+
+<img src="/assets/images/mongo-crud/create-collection.png" alt="">
+
+<p>
+    <h5>Inserindo dados em nossa coleção</h5>
+    Show! Criamos a nossa primeira coleção. Se digitarmos "show collections", o mongo listará todas as coleções que criamos dentro do banco "teste". <br>
+    Agora, vamos criar algo! No C2, digite:
+</p>
+
+<blockquote cite="">
+    db.clientes.insert({nome: "João", cpf: 123})
+</blockquote>
+
+<img src="/assets/images/mongo-crud/insert.png" alt="">
+
+<p>
+    <h5>Listando documentos</h5>
+    Ok! Inserimos nosso primeiro cliente. Mas como faço para listar? Só digitar no C2:
+</p>
+
+<blockquote cite="">
+    db.clientes.find()
+</blockquote>
+
+<img src="/assets/images/mongo-crud/find.png" alt="">
+
+<p>
+    <h5>Listando documentos <small>de uma forma bonitinha</small></h5>
+    Note que ficou tudo na mesma linha... Imagine se nessa coleção há algumas dezenas de registros e você quer ver a listagem mais "bonitinha"...
+</p>
+
+<blockquote cite="">
+    db.clientes.find().pretty()
+</blockquote>
+
+<p>
+    <h5>Inserindo mais coisas...</h5>
+    Vamos adicionar mais alguns clientes...
+</p>
+
+<blockquote cite="">
+    db.clientes.insert([<br>
+        { nome: "Maria", cpf: 321 },<br>
+        { nome: "Padaria da Esquina", cnpj: 551 },<br>
+        { nome: "Padaria da Outra Esquina", cnpj: 155 }<br>
+    ])
+</blockquote>
+
+<img src="/assets/images/mongo-crud/insert-multi.png" alt="">
+
+<p>
+    Agora, adicionamos mais clientes com um único comando. Para isso, só criei um array de objetos e mandei inserir... Além disso, criamos um novo campo "cnpj".
+    Quando rodamos o comando "db.clientes.find()", vimos que o mongo lista todos os objetos desta coleção sem problemas.
+</p>
+
+<p>
+    <h5>Atualizando</h5>
+    Ops! A "Padaria da Outra Esquina" foi para outro bairro e mudou de nome para "Padaria do Outro Bairro" e temos que atualizar nosso banco.
+</p>
+
+<blockquote cite="">
+    db.clientes.update(<br>
+        { _id: ObjectId("588b408a30913e8d47f304d4") },<br>
+        { $set: { nome: "Padaria do Outro Bairro" } }<br>
+    )<br>
+</blockquote>
+
+<img src="/assets/images/mongo-crud/update.png" alt="">
+
+<p>
+    Atualizamos nosso registro! Mas... De onde veio esse "_id"? E esse "$set"? 
+    <br>
+    <br>
+    O mongo, quando inserimos algo, cria um identificador único para cada registro... Então, podemos utilizá-lo em nossas operações. Mas nada que impeça de você criar seu próprio identificador.
+    <br>
+    <br>
+    Já o "$set", ele serve para travarmos a alteração naquele campo. Se colocássemos o update sem o "$set", o mongo iria sobrescrever todo o objeto e perderíamos todos os outros atributos (neste caso, o CNPJ). Sacou?
+</p>
+
+<p>
+    <h5>Apagando registros</h5>
+    O João não é mais nosso cliente, e agora? Vamos apagar ele de nossa coleção!
+</p>
+
+<blockquote cite="">
+    db.clientes.remove({ _id:  ObjectId("588b3e7730913e8d47f304d0") })
+</blockquote>
+
+<img src="/assets/images/mongo-crud/remove.png" alt="">
+
+<p>
+    Pronto! O João foi retirado da nossa lista de clientes.
+</p>
+
+<p>
+    <h5>The end</h5>
+    Com este pequeno tutorial, quis passar como é a forma de trabalho com o MongoDB e mostrar que ele não é um bicho de 7 cabeças... E ainda há bastante coisa para explicar! 
+    <br>
+    <br>
+    Então, até logo! :)
+</p>
+
+<p>
+    <h5>Fontes</h5>
+    https://docs.mongodb.com/v3.2/tutorial/
+</p>
